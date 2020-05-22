@@ -10,7 +10,10 @@ export class AuthService {
   }
 
   loginUser(username, password) {
-    return this.http.post('/api/login', {}, {headers: this.createAuthenticationHeader(username, password)})
+
+    const headers = this.createAuthenticationHeader(username, password);
+    console.log(headers);
+    return this.http.post('http://localhost:8080/login', {}, {headers})
       .subscribe(data => {
         console.log(data);
       });
@@ -18,9 +21,7 @@ export class AuthService {
 
   private createAuthenticationHeader(username: string, password: string) {
     return new HttpHeaders({
-      Authorization: 'Basic ' + btoa(username + ':' + password),
-      username,
-      password
+      Authorization: 'Basic ' + btoa(username + ':' + password)
     });
   }
 }
